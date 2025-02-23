@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arama Motoru</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        #searchForm {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #searchBox {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        #searchButton {
+            width: auto;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff0000;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            box-sizing: border-box;
+            margin-left: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .makale {
+            width: calc(100% - 20px);
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .makale h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .makale p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .makale a {
+            text-decoration: none;
+            color: #000e5c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form id="searchForm" action="{% url 'liste' %}" method="post">
+        {% csrf_token %}
+        <input type="text" id="searchBox" name="text" placeholder="Ara...">
+        <button id="searchButton" type="submit">Ara</button>
+    </form>
+
+    <div class="container">
+        {% for makale in makaleler %}
+        <div class="makale">
+            <h2><a href="{{ makale.URLAdresi }}">{{ makale.YayinAdi }}</a></h2>
+            <p>{{ makale.YazarlarinIsimleri|join:", " }}&emsp;&emsp;<strong>{{ makale.YayimlanmaTarihi }}</strong></p>
+            <p>{{ makale.Ozet }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+
+</html>

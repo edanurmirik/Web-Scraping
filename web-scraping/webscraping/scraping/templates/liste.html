@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makale Listesi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .makale {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .makale h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .makale p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .makale a {
+            text-decoration: none;
+            color: #000e5c;
+            font-weight: bold;
+        }
+
+        .makale strong {
+            font-weight: bold;
+        }
+
+        .siralama-form {
+            margin-bottom: 20px;
+        }
+
+        .siralama-form label {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .siralama-form select {
+            font-size: 16px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .siralama-form button {
+            font-size: 16px;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2c3dbf;
+            color: #fff;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="siralama-form" action="{% url 'liste' %}" method="get">
+            <select name="sort" id="sort">
+                <option value="date_eski">Eskiden Yeniye</option>
+                <option value="date_yeni">Yeniden Eskiye</option>
+            </select>
+            <button type="submit">Sırala</button>
+        </form>
+
+        {% if article_details %}
+        {% for article in article_details %}
+        <div class="makale">
+            <h2><a href="{% url 'detay' yayinAdi=article.YayinAdi %}">{{ article.YayinAdi }}</a></h2>
+            <p>{{ article.YazarlarinIsimleri|join:", " }}&emsp;&emsp;<strong>{{ article.YayimlanmaTarihi }}</strong></p>
+            <p><a href="{{ article.URLAdresi }}">{{ article.URLAdresi }}</a></p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Makale bulunamadı.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
